@@ -61,14 +61,14 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Content - African Outfit Image */}
+          {/* Right Content - Contemporary African Fashion */}
           <div className="relative animate-scale-in">
             <div className="relative">
-              {/* Main African Outfit Image */}
+              {/* Main Contemporary African Fashion Image */}
               <div className="bg-gradient-to-br from-deep-emerald to-warm-terracotta p-4 rounded-3xl shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=500&q=80" 
-                  alt="Beautiful African traditional outfit with colorful patterns"
+                  src="/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png" 
+                  alt="Contemporary African-inspired fashion - stylish couple in modern yellow outfits"
                   className="w-full h-96 object-cover rounded-2xl shadow-lg"
                 />
               </div>
@@ -82,10 +82,10 @@ const Hero = () => {
                 <Palette className="h-5 w-5" />
               </div>
 
-              {/* African Pattern Overlay */}
+              {/* Contemporary Style Overlay */}
               <div className="absolute top-8 left-8 bg-soft-cream/90 backdrop-blur-sm rounded-lg p-3 shadow-md">
-                <div className="text-sm font-semibold text-charcoal-black">Traditional Kente</div>
-                <div className="text-xs text-charcoal-black/70">Authentic African Design</div>
+                <div className="text-sm font-semibold text-charcoal-black">Modern African Style</div>
+                <div className="text-xs text-charcoal-black/70">Contemporary Fashion</div>
               </div>
             </div>
           </div>
