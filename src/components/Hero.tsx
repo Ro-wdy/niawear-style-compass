@@ -61,53 +61,31 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Content - Enhanced Interactive Demo */}
+          {/* Right Content - African Outfit Image */}
           <div className="relative animate-scale-in">
-            <div className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-md mx-auto">
-              {/* Phone Mockup */}
-              <div className="bg-gradient-to-br from-deep-emerald to-warm-terracotta p-6 rounded-2xl text-center">
-                <div className="bg-soft-cream rounded-xl p-6 mb-4">
-                  <Camera className="h-12 w-12 text-deep-emerald mx-auto mb-3" />
-                  <h3 className="font-playfair font-semibold text-charcoal-black mb-2">
-                    Snap Your Style
-                  </h3>
-                  <p className="text-sm text-charcoal-black/70">
-                    Take a photo of any clothing item or African print
-                  </p>
-                </div>
-                
-                <div className="bg-soft-cream rounded-xl p-6 mb-4">
-                  <Palette className="h-12 w-12 text-warm-terracotta mx-auto mb-3" />
-                  <h3 className="font-playfair font-semibold text-charcoal-black mb-2">
-                    African Heritage
-                  </h3>
-                  <p className="text-sm text-charcoal-black/70">
-                    Discover authentic African designs & patterns
-                  </p>
-                </div>
-                
-                <div className="bg-soft-cream rounded-xl p-6 mb-4">
-                  <Sparkles className="h-12 w-12 text-deep-emerald mx-auto mb-3" />
-                  <h3 className="font-playfair font-semibold text-charcoal-black mb-2">
-                    AI Magic
-                  </h3>
-                  <p className="text-sm text-charcoal-black/70">
-                    Get instant styling with cultural context
-                  </p>
-                </div>
-                
-                <Button className="w-full bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold">
-                  Try It Now
-                </Button>
+            <div className="relative">
+              {/* Main African Outfit Image */}
+              <div className="bg-gradient-to-br from-deep-emerald to-warm-terracotta p-4 rounded-3xl shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=500&q=80" 
+                  alt="Beautiful African traditional outfit with colorful patterns"
+                  className="w-full h-96 object-cover rounded-2xl shadow-lg"
+                />
               </div>
               
-              {/* Floating Elements */}
+              {/* Floating Design Elements */}
               <div className="absolute -top-4 -right-4 bg-warm-terracotta text-soft-cream p-3 rounded-full shadow-lg animate-bounce">
                 <Heart className="h-5 w-5" />
               </div>
               
               <div className="absolute -bottom-4 -left-4 bg-deep-emerald text-soft-cream p-3 rounded-full shadow-lg animate-pulse">
                 <Palette className="h-5 w-5" />
+              </div>
+
+              {/* African Pattern Overlay */}
+              <div className="absolute top-8 left-8 bg-soft-cream/90 backdrop-blur-sm rounded-lg p-3 shadow-md">
+                <div className="text-sm font-semibold text-charcoal-black">Traditional Kente</div>
+                <div className="text-xs text-charcoal-black/70">Authentic African Design</div>
               </div>
             </div>
           </div>
