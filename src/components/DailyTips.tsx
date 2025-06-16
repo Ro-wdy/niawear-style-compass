@@ -1,10 +1,19 @@
 
-import React from 'react';
-import { Lightbulb, TrendingUp, Sun, Calendar } from 'lucide-react';
+import React, { useState } from 'react';
+import { Lightbulb, TrendingUp, Sun, Calendar, Phone, User } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 
 const DailyTips = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
   const tips = [
     {
       icon: Sun,
@@ -25,6 +34,44 @@ const DailyTips = () => {
       time: "Weekly"
     }
   ];
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!name.trim() || !phoneNumber.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in both your name and phone number.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      toast({
+        title: "Success! 🎉",
+        description: `Thanks ${name}! You'll start receiving personalized daily fashion tips on your phone.`,
+      });
+      
+      // Reset form
+      setName('');
+      setPhoneNumber('');
+      setShowForm(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section className="py-20 section-gradient">
@@ -75,9 +122,76 @@ const DailyTips = () => {
         </div>
 
         <div className="text-center mt-12 animate-fade-in">
-          <Button className="bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold px-8 py-3">
-            Get Personal Daily Tips
-          </Button>
+          {!showForm ? (
+            <Button 
+              onClick={() => setShowForm(true)}
+              className="bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold px-8 py-3"
+            >
+              Get Personal Daily Tips
+            </Button>
+          ) : (
+            <Card className="max-w-md mx-auto bg-white/95 backdrop-blur border-0 shadow-xl">
+              <CardHeader>
+                <CardTitle className="text-center text-charcoal-black">
+                  Get Your Personal Tips
+                </CardTitle>
+                <CardDescription className="text-center">
+                  Enter your details to receive daily fashion tips via SMS
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="flex items-center gap-2 text-charcoal-black">
+                      <User className="h-4 w-4" />
+                      Full Name
+                    </Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="Enter your full name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="border-warm-terracotta/20 focus:border-warm-terracotta"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="flex items-center gap-2 text-charcoal-black">
+                      <Phone className="h-4 w-4" />
+                      Phone Number
+                    </Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+1 (555) 123-4567"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      className="border-warm-terracotta/20 focus:border-warm-terracotta"
+                    />
+                  </div>
+                  
+                  <div className="flex gap-2 pt-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setShowForm(false)}
+                      className="flex-1 border-charcoal-black/20 text-charcoal-black hover:bg-charcoal-black/5"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex-1 bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold"
+                    >
+                      {isSubmitting ? 'Signing Up...' : 'Start Receiving Tips'}
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </section>
