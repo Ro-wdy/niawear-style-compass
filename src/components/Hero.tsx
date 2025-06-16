@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Camera, Sparkles, Heart, ArrowRight } from 'lucide-react';
+import { Camera, Sparkles, Heart, ArrowRight, Palette } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Hero = () => {
@@ -21,11 +21,15 @@ const Hero = () => {
                 <span className="gradient-text block">
                   Intelligence
                 </span>
+                <span className="text-3xl md:text-4xl lg:text-5xl block mt-2 text-warm-terracotta">
+                  & African Heritage
+                </span>
               </h1>
               
               <p className="text-xl text-charcoal-black/80 max-w-lg leading-relaxed">
-                Transform your wardrobe with AI-powered styling. Take photos, get instant outfit matching, 
-                and discover sustainable fashion that reflects your unique style and values.
+                Transform your wardrobe with AI-powered styling and authentic African outfit designs. 
+                Take photos, get instant outfit matching, and discover sustainable fashion that reflects 
+                your unique style, cultural heritage, and values.
               </p>
             </div>
 
@@ -36,28 +40,28 @@ const Hero = () => {
               </Button>
               
               <Button variant="outline" className="border-deep-emerald text-deep-emerald hover:bg-deep-emerald hover:text-soft-cream px-8 py-3 text-lg">
-                Watch Demo
+                Explore African Designs
               </Button>
             </div>
 
-            {/* Stats */}
+            {/* Enhanced Stats */}
             <div className="grid grid-cols-3 gap-8 pt-8">
               <div className="text-center">
                 <div className="text-3xl font-playfair font-bold text-deep-emerald">50K+</div>
                 <div className="text-sm text-charcoal-black/60">Outfits Styled</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-playfair font-bold text-deep-emerald">98%</div>
-                <div className="text-sm text-charcoal-black/60">Satisfaction Rate</div>
+                <div className="text-3xl font-playfair font-bold text-deep-emerald">15K+</div>
+                <div className="text-sm text-charcoal-black/60">African Designs</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-playfair font-bold text-deep-emerald">2M+</div>
-                <div className="text-sm text-charcoal-black/60">Style Matches</div>
+                <div className="text-3xl font-playfair font-bold text-deep-emerald">98%</div>
+                <div className="text-sm text-charcoal-black/60">Satisfaction Rate</div>
               </div>
             </div>
           </div>
 
-          {/* Right Content - Interactive Demo */}
+          {/* Right Content - Enhanced Interactive Demo */}
           <div className="relative animate-scale-in">
             <div className="relative bg-white rounded-3xl shadow-2xl p-8 max-w-md mx-auto">
               {/* Phone Mockup */}
@@ -68,17 +72,27 @@ const Hero = () => {
                     Snap Your Style
                   </h3>
                   <p className="text-sm text-charcoal-black/70">
-                    Take a photo of any clothing item
+                    Take a photo of any clothing item or African print
                   </p>
                 </div>
                 
                 <div className="bg-soft-cream rounded-xl p-6 mb-4">
-                  <Sparkles className="h-12 w-12 text-warm-terracotta mx-auto mb-3" />
+                  <Palette className="h-12 w-12 text-warm-terracotta mx-auto mb-3" />
+                  <h3 className="font-playfair font-semibold text-charcoal-black mb-2">
+                    African Heritage
+                  </h3>
+                  <p className="text-sm text-charcoal-black/70">
+                    Discover authentic African designs & patterns
+                  </p>
+                </div>
+                
+                <div className="bg-soft-cream rounded-xl p-6 mb-4">
+                  <Sparkles className="h-12 w-12 text-deep-emerald mx-auto mb-3" />
                   <h3 className="font-playfair font-semibold text-charcoal-black mb-2">
                     AI Magic
                   </h3>
                   <p className="text-sm text-charcoal-black/70">
-                    Get instant styling suggestions
+                    Get instant styling with cultural context
                   </p>
                 </div>
                 
@@ -93,7 +107,7 @@ const Hero = () => {
               </div>
               
               <div className="absolute -bottom-4 -left-4 bg-deep-emerald text-soft-cream p-3 rounded-full shadow-lg animate-pulse">
-                <Sparkles className="h-5 w-5" />
+                <Palette className="h-5 w-5" />
               </div>
             </div>
           </div>

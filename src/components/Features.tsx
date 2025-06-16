@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Camera, Sparkles, ShoppingBag, Users, MapPin, Lightbulb } from 'lucide-react';
+import { Camera, Sparkles, ShoppingBag, Users, MapPin, Lightbulb, Palette, Globe } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Features = () => {
@@ -12,33 +12,33 @@ const Features = () => {
       color: "text-deep-emerald"
     },
     {
-      icon: Sparkles,
-      title: "AI Style Assistant",
-      description: "Get personalized outfit recommendations based on your preferences, body type, and lifestyle.",
+      icon: Palette,
+      title: "African Design Library",
+      description: "Access thousands of authentic African prints, patterns, and traditional outfit designs from across the continent.",
       color: "text-warm-terracotta"
     },
     {
-      icon: ShoppingBag,
-      title: "Curated Outfits",
-      description: "Browse through thousands of professionally curated outfits for every occasion and season.",
+      icon: Sparkles,
+      title: "AI Style Assistant",
+      description: "Get personalized outfit recommendations based on your preferences, body type, and cultural style preferences.",
       color: "text-deep-emerald"
+    },
+    {
+      icon: Globe,
+      title: "Cultural Context",
+      description: "Learn about the history and cultural significance of African prints and traditional garments while styling.",
+      color: "text-warm-terracotta"
     },
     {
       icon: Users,
       title: "Gender Inclusive",
-      description: "Tailored styling experiences for all genders with inclusive fashion recommendations.",
-      color: "text-warm-terracotta"
-    },
-    {
-      icon: Lightbulb,
-      title: "Daily Fashion Tips",
-      description: "Receive daily styling tips, trend updates, and seasonal fashion advice from experts.",
+      description: "Tailored styling experiences for all genders with inclusive African and contemporary fashion recommendations.",
       color: "text-deep-emerald"
     },
     {
       icon: MapPin,
       title: "Secondhand Markets",
-      description: "Discover local secondhand and vintage stores for sustainable and affordable fashion finds.",
+      description: "Discover local secondhand and vintage stores for sustainable African-inspired and contemporary fashion finds.",
       color: "text-warm-terracotta"
     }
   ];
@@ -49,11 +49,11 @@ const Features = () => {
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-charcoal-black mb-4">
             Fashion Intelligence
-            <span className="gradient-text block">at Your Fingertips</span>
+            <span className="gradient-text block">meets African Heritage</span>
           </h2>
           <p className="text-xl text-charcoal-black/70 max-w-3xl mx-auto">
             Experience the future of fashion with our comprehensive suite of AI-powered styling tools 
-            designed to make sustainable fashion accessible and personal.
+            that celebrate African design heritage while making sustainable fashion accessible and personal.
           </p>
         </div>
 
