@@ -35,7 +35,12 @@ const DailyTips = () => {
             <span>Daily Fashion Intelligence</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-char: 
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-charcoal-black mb-4">
+            Your Daily Style Guide
+          </h2>
+          <p className="text-xl text-charcoal-black/70 max-w-2xl mx-auto">
+            Personalized fashion tips and trending insights delivered fresh every day
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
