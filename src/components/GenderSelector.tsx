@@ -2,30 +2,49 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
 const GenderSelector = () => {
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const genderOptions = [
     {
       id: 'female',
       title: 'Women\'s Fashion',
       description: 'Explore feminine styles, dresses, accessories and more',
-      emoji: '👗'
+      emoji: '👗',
+      route: '/womens-fashion'
     },
     {
       id: 'male',
       title: 'Men\'s Fashion',
       description: 'Discover masculine styles, suits, casual wear and accessories',
-      emoji: '👔'
+      emoji: '👔',
+      route: '/mens-fashion'
+    },
+    {
+      id: 'kids',
+      title: 'Kids Fashion',
+      description: 'Adorable and comfortable clothing for children',
+      emoji: '👶',
+      route: '/kids-fashion'
     },
     {
       id: 'non-binary',
       title: 'All Styles',
       description: 'Gender-neutral and inclusive fashion for everyone',
-      emoji: '✨'
+      emoji: '✨',
+      route: '/all-styles'
     }
   ];
+
+  const handleContinue = () => {
+    const selectedOption = genderOptions.find(option => option.id === selectedGender);
+    if (selectedOption) {
+      navigate(selectedOption.route);
+    }
+  };
 
   return (
     <section id="styling" className="py-20 bg-soft-cream">
@@ -40,7 +59,7 @@ const GenderSelector = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
           {genderOptions.map((option, index) => (
             <Card 
               key={option.id}
@@ -70,8 +89,13 @@ const GenderSelector = () => {
                       ? 'bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream'
                       : 'bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black'
                   }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedGender(option.id);
+                    navigate(option.route);
+                  }}
                 >
-                  {selectedGender === option.id ? 'Selected' : 'Choose This Style'}
+                  Choose This Style
                 </Button>
               </CardContent>
             </Card>
@@ -80,7 +104,10 @@ const GenderSelector = () => {
 
         {selectedGender && (
           <div className="text-center mt-12 animate-fade-in">
-            <Button className="bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream font-semibold px-8 py-3 text-lg">
+            <Button 
+              onClick={handleContinue}
+              className="bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream font-semibold px-8 py-3 text-lg"
+            >
               Continue to Styling
             </Button>
           </div>

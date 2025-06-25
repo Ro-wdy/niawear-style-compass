@@ -1,15 +1,18 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft, Heart, Search, Filter } from 'lucide-react';
+import { ArrowLeft, Heart, Search, Filter, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
 
 const AfricanDesigns = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [cart, setCart] = useState<{[key: number]: number}>({});
+  const { toast } = useToast();
 
   const designs = [
     {
@@ -19,7 +22,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/fef49afa-b6ba-4afc-9ba3-351cf36508b8.png",
       description: "Modern African-inspired yellow tracksuit with geometric print details",
       category: "Contemporary",
-      colors: ["Yellow", "Navy", "White"]
+      colors: ["Yellow", "Navy", "White"],
+      price: 89.99
     },
     {
       id: 2,
@@ -28,7 +32,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/76a451a9-71e2-4139-8bb5-beca9dfc5f74.png",
       description: "Elegant flowing kimono-style coat with traditional Ankara print patterns",
       category: "Contemporary",
-      colors: ["Orange", "Gold", "Black", "Red"]
+      colors: ["Orange", "Gold", "Black", "Red"],
+      price: 129.99
     },
     {
       id: 3,
@@ -37,7 +42,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/2cb8f323-cb3a-4dae-9804-9544ad9b87e0.png",
       description: "Stunning off-shoulder ball gown with circular African print motifs",
       category: "Traditional",
-      colors: ["Orange", "Black", "White", "Gold"]
+      colors: ["Orange", "Black", "White", "Gold"],
+      price: 149.99
     },
     {
       id: 4,
@@ -46,7 +52,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/5c827bd6-5816-4a96-a547-9625a1926c0f.png",
       description: "Traditional mudcloth-inspired bucket hats with symbolic patterns",
       category: "Accessories",
-      colors: ["Black", "White", "Orange"]
+      colors: ["Black", "White", "Orange"],
+      price: 24.99
     },
     {
       id: 5,
@@ -55,7 +62,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/b3730133-85a4-46d1-abce-100bcd544c84.png",
       description: "Practical crossbody bag featuring vibrant Kente-inspired patterns",
       category: "Accessories",
-      colors: ["Yellow", "Green", "Red", "Black"]
+      colors: ["Yellow", "Green", "Red", "Black"],
+      price: 45.99
     },
     {
       id: 6,
@@ -64,7 +72,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/e6538ac0-42ec-48dd-ba3f-f153d27427b7.png",
       description: "Comfortable slides featuring mixed African print patterns",
       category: "Footwear",
-      colors: ["Yellow", "Black", "White"]
+      colors: ["Yellow", "Black", "White"],
+      price: 32.99
     },
     {
       id: 7,
@@ -73,7 +82,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/8ee99d7d-f688-41bd-b808-8853ff69bf17.png",
       description: "Complete summer set with Kente-print hat, bag, and sandals",
       category: "Accessories",
-      colors: ["Multi-colored", "Gold", "Blue", "Green"]
+      colors: ["Multi-colored", "Gold", "Blue", "Green"],
+      price: 79.99
     },
     {
       id: 8,
@@ -82,7 +92,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
       description: "Traditional handwoven cloth with geometric patterns representing various meanings",
       category: "Traditional",
-      colors: ["Gold", "Green", "Red"]
+      colors: ["Gold", "Green", "Red"],
+      price: 65.99
     },
     {
       id: 9,
@@ -91,7 +102,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
       description: "Visual symbols representing concepts and wisdom from Akan culture",
       category: "Symbolic",
-      colors: ["Black", "White", "Gold"]
+      colors: ["Black", "White", "Gold"],
+      price: 35.99
     },
     {
       id: 10,
@@ -100,7 +112,8 @@ const AfricanDesigns = () => {
       image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
       description: "Colorful garment with ornate embroidery around the neckline",
       category: "Traditional",
-      colors: ["Multi-colored"]
+      colors: ["Multi-colored"],
+      price: 55.99
     }
   ];
 
@@ -113,6 +126,21 @@ const AfricanDesigns = () => {
     return matchesSearch && matchesCategory;
   });
 
+  const addToCart = (designId: number) => {
+    setCart(prev => ({
+      ...prev,
+      [designId]: (prev[designId] || 0) + 1
+    }));
+    toast({
+      title: "Added to Cart",
+      description: "Item has been added to your cart successfully!",
+    });
+  };
+
+  const getTotalItems = () => {
+    return Object.values(cart).reduce((sum, count) => sum + count, 0);
+  };
+
   return (
     <div className="min-h-screen bg-soft-cream">
       {/* Header */}
@@ -124,7 +152,11 @@ const AfricanDesigns = () => {
               <span>Back to Home</span>
             </Link>
             <h1 className="text-2xl font-playfair font-bold text-soft-cream">African Design Heritage</h1>
-            <div className="flex items-center gap-2 text-soft-cream">
+            <div className="flex items-center gap-4 text-soft-cream">
+              <div className="flex items-center gap-2">
+                <ShoppingCart className="h-5 w-5" />
+                <span>{getTotalItems()} items</span>
+              </div>
               <Heart className="h-5 w-5" />
             </div>
           </div>
@@ -208,7 +240,7 @@ const AfricanDesigns = () => {
                 <CardDescription className="text-charcoal-black/70 mb-4 leading-relaxed">
                   {design.description}
                 </CardDescription>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <div className="text-sm font-semibold text-charcoal-black">Traditional Colors:</div>
                   <div className="flex flex-wrap gap-1">
                     {design.colors.map((color, index) => (
@@ -216,6 +248,18 @@ const AfricanDesigns = () => {
                         {color}
                       </Badge>
                     ))}
+                  </div>
+                  <div className="flex items-center justify-between pt-3">
+                    <span className="text-2xl font-bold text-deep-emerald">
+                      ${design.price}
+                    </span>
+                    <Button 
+                      onClick={() => addToCart(design.id)}
+                      className="bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream"
+                    >
+                      <ShoppingCart className="h-4 w-4 mr-2" />
+                      Add to Cart
+                    </Button>
                   </div>
                 </div>
               </CardContent>
