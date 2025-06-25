@@ -14,6 +14,24 @@ const MarketplacePage = () => {
   const products = [
     {
       id: 1,
+      name: "Ankara Print Jumpsuit",
+      price: 145.99,
+      image: "/lovable-uploads/7bc4068b-f22d-4c1b-bb00-752a0d184568.png",
+      rating: 4.9,
+      description: "Stunning strapless jumpsuit with bold African print patterns",
+      category: "Jumpsuits"
+    },
+    {
+      id: 2,
+      name: "Modern Agbada Set",
+      price: 189.99,
+      image: "/lovable-uploads/81e383f1-e9d0-4ff8-b800-7fff7c41cc45.png",
+      rating: 4.8,
+      description: "Contemporary black Agbada with white accent stripes",
+      category: "Traditional"
+    },
+    {
+      id: 3,
       name: "Kente Print Blazer",
       price: 129.99,
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=center",
@@ -22,7 +40,7 @@ const MarketplacePage = () => {
       category: "Outerwear"
     },
     {
-      id: 2,
+      id: 4,
       name: "Ankara Midi Dress",
       price: 89.99,
       image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=400&fit=crop&crop=center",
@@ -31,7 +49,7 @@ const MarketplacePage = () => {
       category: "Dresses"
     },
     {
-      id: 3,
+      id: 5,
       name: "Dashiki Shirt",
       price: 69.99,
       image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&crop=center",
@@ -40,7 +58,7 @@ const MarketplacePage = () => {
       category: "Shirts"
     },
     {
-      id: 4,
+      id: 6,
       name: "Mudcloth Bag",
       price: 49.99,
       image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center",
@@ -49,7 +67,7 @@ const MarketplacePage = () => {
       category: "Accessories"
     },
     {
-      id: 5,
+      id: 7,
       name: "African Print Kimono",
       price: 95.99,
       image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop&crop=center",
@@ -58,13 +76,31 @@ const MarketplacePage = () => {
       category: "Outerwear"
     },
     {
-      id: 6,
+      id: 8,
       name: "Tribal Jewelry Set",
       price: 75.99,
       image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop&crop=center",
       rating: 4.7,
       description: "Authentic tribal-inspired necklace and earring set",
       category: "Accessories"
+    },
+    {
+      id: 9,
+      name: "Wax Print Palazzo Pants",
+      price: 78.99,
+      image: "https://images.unsplash.com/photo-1544957992-20514f595d6f?w=400&h=400&fit=crop&crop=center",
+      rating: 4.6,
+      description: "Wide-leg palazzo pants in authentic African wax print",
+      category: "Bottoms"
+    },
+    {
+      id: 10,
+      name: "Boubou Traditional Robe",
+      price: 165.99,
+      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
+      rating: 4.8,
+      description: "Elegant traditional Boubou robe with intricate embroidery",
+      category: "Traditional"
     }
   ];
 
@@ -125,7 +161,7 @@ const MarketplacePage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {products.map((product) => (
             <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
               <CardHeader className="p-0">
