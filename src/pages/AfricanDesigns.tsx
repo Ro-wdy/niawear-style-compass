@@ -14,6 +14,69 @@ const AfricanDesigns = () => {
   const designs = [
     {
       id: 1,
+      name: "Contemporary Yellow Tracksuit",
+      origin: "Modern Africa",
+      image: "/lovable-uploads/fef49afa-b6ba-4afc-9ba3-351cf36508b8.png",
+      description: "Modern African-inspired yellow tracksuit with geometric print details",
+      category: "Contemporary",
+      colors: ["Yellow", "Navy", "White"]
+    },
+    {
+      id: 2,
+      name: "Ankara Kimono Coat",
+      origin: "West Africa",
+      image: "/lovable-uploads/76a451a9-71e2-4139-8bb5-beca9dfc5f74.png",
+      description: "Elegant flowing kimono-style coat with traditional Ankara print patterns",
+      category: "Contemporary",
+      colors: ["Orange", "Gold", "Black", "Red"]
+    },
+    {
+      id: 3,
+      name: "African Print Gown",
+      origin: "Central Africa",
+      image: "/lovable-uploads/2cb8f323-cb3a-4dae-9804-9544ad9b87e0.png",
+      description: "Stunning off-shoulder ball gown with circular African print motifs",
+      category: "Traditional",
+      colors: ["Orange", "Black", "White", "Gold"]
+    },
+    {
+      id: 4,
+      name: "Mudcloth Bucket Hats",
+      origin: "Mali",
+      image: "/lovable-uploads/5c827bd6-5816-4a96-a547-9625a1926c0f.png",
+      description: "Traditional mudcloth-inspired bucket hats with symbolic patterns",
+      category: "Accessories",
+      colors: ["Black", "White", "Orange"]
+    },
+    {
+      id: 5,
+      name: "Kente Print Backpack",
+      origin: "Ghana",
+      image: "/lovable-uploads/b3730133-85a4-46d1-abce-100bcd544c84.png",
+      description: "Practical crossbody bag featuring vibrant Kente-inspired patterns",
+      category: "Accessories",
+      colors: ["Yellow", "Green", "Red", "Black"]
+    },
+    {
+      id: 6,
+      name: "Ankara Print Slides",
+      origin: "Nigeria",
+      image: "/lovable-uploads/e6538ac0-42ec-48dd-ba3f-f153d27427b7.png",
+      description: "Comfortable slides featuring mixed African print patterns",
+      category: "Footwear",
+      colors: ["Yellow", "Black", "White"]
+    },
+    {
+      id: 7,
+      name: "Kente Accessories Set",
+      origin: "Ghana",
+      image: "/lovable-uploads/8ee99d7d-f688-41bd-b808-8853ff69bf17.png",
+      description: "Complete summer set with Kente-print hat, bag, and sandals",
+      category: "Accessories",
+      colors: ["Multi-colored", "Gold", "Blue", "Green"]
+    },
+    {
+      id: 8,
       name: "Kente Pattern",
       origin: "Ghana",
       image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
@@ -22,34 +85,7 @@ const AfricanDesigns = () => {
       colors: ["Gold", "Green", "Red"]
     },
     {
-      id: 2,
-      name: "Ankara Print",
-      origin: "West Africa",
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
-      description: "Vibrant wax print fabric known for its bold patterns and bright colors",
-      category: "Contemporary",
-      colors: ["Blue", "Orange", "Yellow"]
-    },
-    {
-      id: 3,
-      name: "Mudcloth Design",
-      origin: "Mali",
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
-      description: "Handwoven cotton fabric dyed with fermented mud, featuring symbolic patterns",
-      category: "Traditional",
-      colors: ["Brown", "Cream", "Black"]
-    },
-    {
-      id: 4,
-      name: "Dashiki Pattern",
-      origin: "Nigeria",
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
-      description: "Colorful garment with ornate embroidery around the neckline",
-      category: "Traditional",
-      colors: ["Multi-colored"]
-    },
-    {
-      id: 5,
+      id: 9,
       name: "Adinkra Symbols",
       origin: "Ghana",
       image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
@@ -58,17 +94,17 @@ const AfricanDesigns = () => {
       colors: ["Black", "White", "Gold"]
     },
     {
-      id: 6,
-      name: "Shweshwe Print",
-      origin: "South Africa",
+      id: 10,
+      name: "Dashiki Pattern",
+      origin: "Nigeria",
       image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
-      description: "Indigo-printed cotton fabric with intricate geometric patterns",
-      category: "Contemporary",
-      colors: ["Blue", "White", "Brown"]
+      description: "Colorful garment with ornate embroidery around the neckline",
+      category: "Traditional",
+      colors: ["Multi-colored"]
     }
   ];
 
-  const categories = ['All', 'Traditional', 'Contemporary', 'Symbolic'];
+  const categories = ['All', 'Traditional', 'Contemporary', 'Symbolic', 'Accessories', 'Footwear'];
 
   const filteredDesigns = designs.filter(design => {
     const matchesSearch = design.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -118,7 +154,7 @@ const AfricanDesigns = () => {
               className="pl-10 border-deep-emerald/20 focus:border-deep-emerald"
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {categories.map((category) => (
               <Button
                 key={category}
