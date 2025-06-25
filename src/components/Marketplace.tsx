@@ -4,6 +4,7 @@ import { MapPin, Heart, Star, DollarSign } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router-dom';
 
 const Marketplace = () => {
   const markets = [
@@ -111,9 +112,11 @@ const Marketplace = () => {
         </div>
 
         <div className="text-center mt-12 animate-fade-in">
-          <Button className="bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold px-8 py-3">
-            Find More Stores Near Me
-          </Button>
+          <Link to="/marketplace">
+            <Button className="bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold px-8 py-3">
+              Visit NiaWear Marketplace
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

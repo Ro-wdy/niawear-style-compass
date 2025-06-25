@@ -1,0 +1,189 @@
+
+import React, { useState } from 'react';
+import { ArrowLeft, ShoppingCart, Heart, Star, Plus, Minus } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
+
+const MarketplacePage = () => {
+  const [cart, setCart] = useState<{[key: number]: number}>({});
+  const { toast } = useToast();
+
+  const products = [
+    {
+      id: 1,
+      name: "Kente Print Blazer",
+      price: 129.99,
+      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
+      rating: 4.8,
+      description: "Contemporary blazer with traditional Kente patterns",
+      category: "Outerwear"
+    },
+    {
+      id: 2,
+      name: "Ankara Midi Dress",
+      price: 89.99,
+      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
+      rating: 4.9,
+      description: "Elegant midi dress with vibrant Ankara prints",
+      category: "Dresses"
+    },
+    {
+      id: 3,
+      name: "Dashiki Shirt",
+      price: 69.99,
+      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
+      rating: 4.7,
+      description: "Classic dashiki with modern tailoring",
+      category: "Shirts"
+    },
+    {
+      id: 4,
+      name: "Mudcloth Bag",
+      price: 49.99,
+      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
+      rating: 4.6,
+      description: "Handcrafted bag with traditional mudcloth design",
+      category: "Accessories"
+    }
+  ];
+
+  const addToCart = (productId: number) => {
+    setCart(prev => ({
+      ...prev,
+      [productId]: (prev[productId] || 0) + 1
+    }));
+    toast({
+      title: "Added to Cart",
+      description: "Item has been added to your cart successfully!",
+    });
+  };
+
+  const removeFromCart = (productId: number) => {
+    setCart(prev => {
+      const newCart = { ...prev };
+      if (newCart[productId] > 1) {
+        newCart[productId] -= 1;
+      } else {
+        delete newCart[productId];
+      }
+      return newCart;
+    });
+  };
+
+  const getTotalItems = () => {
+    return Object.values(cart).reduce((sum, count) => sum + count, 0);
+  };
+
+  return (
+    <div className="min-h-screen bg-soft-cream">
+      {/* Header */}
+      <header className="bg-deep-emerald shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center gap-2 text-soft-cream hover:text-earthy-gold">
+              <ArrowLeft className="h-5 w-5" />
+              <span>Back to Home</span>
+            </Link>
+            <h1 className="text-2xl font-playfair font-bold text-soft-cream">NiaWear Marketplace</h1>
+            <div className="flex items-center gap-2 text-soft-cream">
+              <ShoppingCart className="h-5 w-5" />
+              <span>{getTotalItems()} items</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-playfair font-bold text-charcoal-black mb-4">
+            Authentic African Fashion
+          </h2>
+          <p className="text-xl text-charcoal-black/70">
+            Discover our curated collection of contemporary African-inspired clothing
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.map((product) => (
+            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <CardHeader className="p-0">
+                <div className="relative overflow-hidden rounded-t-lg">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="absolute top-2 right-2 bg-white/80 hover:bg-white text-charcoal-black"
+                  >
+                    <Heart className="h-4 w-4" />
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Badge variant="secondary" className="text-xs">
+                    {product.category}
+                  </Badge>
+                  <div className="flex items-center gap-1 text-sm">
+                    <Star className="h-4 w-4 text-earthy-gold fill-current" />
+                    {product.rating}
+                  </div>
+                </div>
+                <CardTitle className="text-lg font-playfair text-charcoal-black mb-2">
+                  {product.name}
+                </CardTitle>
+                <CardDescription className="text-charcoal-black/60 mb-3">
+                  {product.description}
+                </CardDescription>
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl font-bold text-deep-emerald">
+                    ${product.price}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {cart[product.id] ? (
+                      <div className="flex items-center gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="icon"
+                          onClick={() => removeFromCart(product.id)}
+                          className="h-8 w-8"
+                        >
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <span className="font-semibold">{cart[product.id]}</span>
+                        <Button 
+                          variant="outline" 
+                          size="icon"
+                          onClick={() => addToCart(product.id)}
+                          className="h-8 w-8"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button 
+                        onClick={() => addToCart(product.id)}
+                        className="bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream"
+                      >
+                        Add to Cart
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default MarketplacePage;

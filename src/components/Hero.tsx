@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { Camera, Sparkles, Heart, ArrowRight, Palette } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -34,14 +34,18 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold px-8 py-3 text-lg group">
-                Start Styling Now
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <Link to="/ai-styling">
+                <Button className="bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold px-8 py-3 text-lg group">
+                  Start Styling Now
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
               
-              <Button variant="outline" className="border-deep-emerald text-deep-emerald hover:bg-deep-emerald hover:text-soft-cream px-8 py-3 text-lg">
-                Explore African Designs
-              </Button>
+              <Link to="/african-designs">
+                <Button variant="outline" className="border-deep-emerald text-deep-emerald hover:bg-deep-emerald hover:text-soft-cream px-8 py-3 text-lg">
+                  Explore African Designs
+                </Button>
+              </Link>
             </div>
 
             {/* Enhanced Stats */}

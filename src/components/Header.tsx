@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ShoppingBag, Camera, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,14 +13,14 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <div className="bg-earthy-gold p-2 rounded-lg">
                 <Sparkles className="h-6 w-6 text-charcoal-black" />
               </div>
               <h1 className="text-2xl font-playfair font-bold text-soft-cream">
                 NiaWear
               </h1>
-            </div>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -27,18 +28,20 @@ const Header = () => {
             <a href="#features" className="text-soft-cream hover:text-earthy-gold transition-colors duration-200">
               Features
             </a>
-            <a href="#styling" className="text-soft-cream hover:text-earthy-gold transition-colors duration-200">
+            <Link to="/ai-styling" className="text-soft-cream hover:text-earthy-gold transition-colors duration-200">
               AI Styling
-            </a>
-            <a href="#browse" className="text-soft-cream hover:text-earthy-gold transition-colors duration-200">
-              Browse Outfits
-            </a>
-            <a href="#marketplace" className="text-soft-cream hover:text-earthy-gold transition-colors duration-200">
+            </Link>
+            <Link to="/african-designs" className="text-soft-cream hover:text-earthy-gold transition-colors duration-200">
+              Browse Designs
+            </Link>
+            <Link to="/marketplace" className="text-soft-cream hover:text-earthy-gold transition-colors duration-200">
               Marketplace
-            </a>
-            <Button className="bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold">
-              Get Started
-            </Button>
+            </Link>
+            <Link to="/ai-styling">
+              <Button className="bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold">
+                Get Started
+              </Button>
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
@@ -61,19 +64,21 @@ const Header = () => {
               <a href="#features" className="block px-3 py-2 text-soft-cream hover:text-earthy-gold transition-colors duration-200">
                 Features
               </a>
-              <a href="#styling" className="block px-3 py-2 text-soft-cream hover:text-earthy-gold transition-colors duration-200">
+              <Link to="/ai-styling" className="block px-3 py-2 text-soft-cream hover:text-earthy-gold transition-colors duration-200">
                 AI Styling
-              </a>
-              <a href="#browse" className="block px-3 py-2 text-soft-cream hover:text-earthy-gold transition-colors duration-200">
-                Browse Outfits
-              </a>
-              <a href="#marketplace" className="block px-3 py-2 text-soft-cream hover:text-earthy-gold transition-colors duration-200">
+              </Link>
+              <Link to="/african-designs" className="block px-3 py-2 text-soft-cream hover:text-earthy-gold transition-colors duration-200">
+                Browse Designs
+              </Link>
+              <Link to="/marketplace" className="block px-3 py-2 text-soft-cream hover:text-earthy-gold transition-colors duration-200">
                 Marketplace
-              </a>
+              </Link>
               <div className="px-3 py-2">
-                <Button className="w-full bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold">
-                  Get Started
-                </Button>
+                <Link to="/ai-styling">
+                  <Button className="w-full bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold">
+                    Get Started
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
