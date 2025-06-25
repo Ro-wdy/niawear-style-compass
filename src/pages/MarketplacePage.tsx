@@ -16,7 +16,7 @@ const MarketplacePage = () => {
       id: 1,
       name: "Kente Print Blazer",
       price: 129.99,
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=center",
       rating: 4.8,
       description: "Contemporary blazer with traditional Kente patterns",
       category: "Outerwear"
@@ -25,7 +25,7 @@ const MarketplacePage = () => {
       id: 2,
       name: "Ankara Midi Dress",
       price: 89.99,
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
+      image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=400&fit=crop&crop=center",
       rating: 4.9,
       description: "Elegant midi dress with vibrant Ankara prints",
       category: "Dresses"
@@ -34,7 +34,7 @@ const MarketplacePage = () => {
       id: 3,
       name: "Dashiki Shirt",
       price: 69.99,
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
+      image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&crop=center",
       rating: 4.7,
       description: "Classic dashiki with modern tailoring",
       category: "Shirts"
@@ -43,9 +43,27 @@ const MarketplacePage = () => {
       id: 4,
       name: "Mudcloth Bag",
       price: 49.99,
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
+      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center",
       rating: 4.6,
       description: "Handcrafted bag with traditional mudcloth design",
+      category: "Accessories"
+    },
+    {
+      id: 5,
+      name: "African Print Kimono",
+      price: 95.99,
+      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop&crop=center",
+      rating: 4.5,
+      description: "Flowing kimono with bold African prints",
+      category: "Outerwear"
+    },
+    {
+      id: 6,
+      name: "Tribal Jewelry Set",
+      price: 75.99,
+      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop&crop=center",
+      rating: 4.7,
+      description: "Authentic tribal-inspired necklace and earring set",
       category: "Accessories"
     }
   ];
@@ -107,7 +125,7 @@ const MarketplacePage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
             <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
               <CardHeader className="p-0">
