@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowLeft, Camera, Upload, MessageSquare, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -7,51 +6,83 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import axios from 'axios';
 
 const AIStyling = () => {
   const [selectedOption, setSelectedOption] = useState<'photo' | 'describe' | null>(null);
   const [description, setDescription] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [recommendations, setRecommendations] = useState(null);
   const { toast } = useToast();
 
-  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const API_URL = 'http://localhost:8000'; // Replace with your FastAPI URL
+
+  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setIsAnalyzing(true);
-      // Simulate AI analysis
-      setTimeout(() => {
-        setIsAnalyzing(false);
-        toast({
-          title: "Photo Analyzed!",
-          description: "We've analyzed your outfit and generated style recommendations.",
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await axios.post(`${API_URL}/upload-photo/`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
         });
-      }, 2000);
+
+        setRecommendations(response.data.data);
+        toast({
+          title: 'Photo Analyzed!',
+          description: 'Your outfit recommendations are ready.',
+        });
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: 'Failed to analyze photo. Please try again.',
+          variant: 'destructive',
+        });
+      } finally {
+        setIsAnalyzing(false);
+      }
     }
   };
 
-  const handleDescriptionSubmit = () => {
+  const handleDescriptionSubmit = async () => {
     if (!description.trim()) {
       toast({
-        title: "Description Required",
-        description: "Please describe what you want to wear.",
-        variant: "destructive"
+        title: 'Description Required',
+        description: 'Please describe what you want to wear.',
+        variant: 'destructive',
       });
       return;
     }
-    
+
     setIsAnalyzing(true);
-    setTimeout(() => {
-      setIsAnalyzing(false);
-      toast({
-        title: "Styling Complete!",
-        description: "We've created personalized outfit recommendations based on your description.",
+    try {
+      const response = await axios.post(`${API_URL}/describe-style/`, {
+        description,
+        occasion: null, // Add logic to extract occasion if needed
+        preferred_colors: [], // Add logic to extract colors if needed
       });
-    }, 2000);
+
+      setRecommendations(response.data.data);
+      toast({
+        title: 'Styling Complete!',
+        description: 'Your personalized outfit recommendations are ready.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to process description. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-soft-cream">
-      {/* Header */}
+      {/* Header (unchanged) */}
       <header className="bg-deep-emerald shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -186,6 +217,22 @@ const AIStyling = () => {
                   <p className="text-charcoal-black/70">
                     Our AI is analyzing your request and creating personalized recommendations...
                   </p>
+                </div>
+              )}
+
+              {recommendations && (
+                <div className="mt-6 p-4 bg-deep-emerald/10 rounded-lg">
+                  <h3 className="text-lg font-playfair text-charcoal-black mb-2">Recommendations</h3>
+                  <p className="text-charcoal-black/70">
+                    {selectedOption === 'photo'
+                      ? `Clothing: ${recommendations.clothing_type}. ${recommendations.style_suggestion}`
+                      : recommendations.style_suggestion}
+                  </p>
+                  {recommendations.weather && (
+                    <p className="text-charcoal-black/70 mt-2">
+                      Weather: {recommendations.weather.temperature}°C, {recommendations.weather.condition}
+                    </p>
+                  )}
                 </div>
               )}
             </CardContent>
