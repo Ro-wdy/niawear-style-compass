@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Lightbulb, TrendingUp, Sun, Calendar, Phone, User } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import axios from 'axios';
 
 const DailyTips = () => {
   const [showForm, setShowForm] = useState(false);
@@ -13,6 +13,8 @@ const DailyTips = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+
+  const API_URL = 'http://localhost:8000';
 
   const tips = [
     {
@@ -47,15 +49,28 @@ const DailyTips = () => {
       return;
     }
 
+    // Basic phone number validation
+    const phoneRegex = /^\+\d{10,14}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+      toast({
+        title: "Invalid Phone Number",
+        description: "Please enter a valid phone number (e.g., +254123456789).",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     
-    // Simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      const response = await axios.post(`${API_URL}/subscribe-sms/`, {
+        name,
+        phone_number: phoneNumber,
+      });
+
       toast({
         title: "Success! 🎉",
-        description: `Thanks ${name}! You'll start receiving personalized daily fashion tips on your phone.`,
+        description: response.data.message || `Thanks ${name}! You'll start receiving personalized daily fashion tips on your phone.`,
       });
       
       // Reset form
@@ -65,7 +80,7 @@ const DailyTips = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Something went wrong. Please try again.",
+        description: error.response?.data?.detail || "Something went wrong. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -164,7 +179,7 @@ const DailyTips = () => {
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="+1 (555) 123-4567"
+                      placeholder="+254123456789"
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
                       className="border-warm-terracotta/20 focus:border-warm-terracotta"
