@@ -25,7 +25,7 @@ const AIStyling = () => {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await axios.post(`${API_URL}/upload-photo/`, formData, {
+        const response = await axios.post(`${API_URL}/ai/upload-photo`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
 

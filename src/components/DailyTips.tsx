@@ -63,7 +63,7 @@ const DailyTips = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await axios.post(`${API_URL}/subscribe-sms/`, {
+      const response = await axios.post(`${API_URL}/sms/send_sms`, {
         name,
         phone_number: phoneNumber,
       });
