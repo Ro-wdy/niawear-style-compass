@@ -85,7 +85,7 @@ const CheckoutModal = ({ isOpen, onClose, productName, productPrice, productImag
             />
             <div className="flex-1">
               <h3 className="font-semibold text-charcoal-black">{productName}</h3>
-              <p className="text-xl font-bold text-deep-emerald">${productPrice}</p>
+              <p className="text-xl font-bold text-deep-emerald">KSh {productPrice.toLocaleString()}</p>
             </div>
           </div>
 

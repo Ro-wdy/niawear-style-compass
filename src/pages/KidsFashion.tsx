@@ -19,7 +19,7 @@ const KidsFashion = () => {
     {
       id: 1,
       name: "Colorful T-Shirt Set",
-      price: 29.99,
+      price: 3871,
       image: "https://images.unsplash.com/photo-1519340333755-56e9c1d4c8d4?w=400&h=400&fit=crop&crop=center",
       rating: 4.8,
       description: "Comfortable cotton t-shirts in fun, vibrant colors"
@@ -27,7 +27,7 @@ const KidsFashion = () => {
     {
       id: 2,
       name: "Denim Overalls",
-      price: 39.99,
+      price: 5159,
       image: "https://images.unsplash.com/photo-1503944583220-79d8926ad5a2?w=400&h=400&fit=crop&crop=center",
       rating: 4.9,
       description: "Adorable denim overalls perfect for playtime"
@@ -35,7 +35,7 @@ const KidsFashion = () => {
     {
       id: 3,
       name: "Princess Dress",
-      price: 49.99,
+      price: 6449,
       image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
       rating: 4.7,
       description: "Beautiful princess dress for special occasions"
@@ -43,7 +43,7 @@ const KidsFashion = () => {
     {
       id: 4,
       name: "Casual Shorts Set",
-      price: 24.99,
+      price: 3223,
       image: "https://images.unsplash.com/photo-1544957992-20514f595d6f?w=400&h=400&fit=crop&crop=center",
       rating: 4.6,
       description: "Comfortable shorts and top set for summer"
@@ -131,7 +131,7 @@ const KidsFashion = () => {
                 </CardDescription>
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-deep-emerald">
-                    ${product.price}
+                    KSh {product.price.toLocaleString()}
                   </span>
                   <Button 
                     onClick={() => addToCart(product.id)}

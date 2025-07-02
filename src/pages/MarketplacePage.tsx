@@ -19,7 +19,7 @@ const MarketplacePage = () => {
     {
       id: 1,
       name: "Ankara Print Jumpsuit",
-      price: 145.99,
+      price: 18833,
       image: "/lovable-uploads/7bc4068b-f22d-4c1b-bb00-752a0d184568.png",
       rating: 4.9,
       description: "Stunning strapless jumpsuit with bold African print patterns",
@@ -28,7 +28,7 @@ const MarketplacePage = () => {
     {
       id: 2,
       name: "Modern Agbada Set",
-      price: 189.99,
+      price: 24511,
       image: "/lovable-uploads/81e383f1-e9d0-4ff8-b800-7fff7c41cc45.png",
       rating: 4.8,
       description: "Contemporary black Agbada with white accent stripes",
@@ -37,7 +37,7 @@ const MarketplacePage = () => {
     {
       id: 3,
       name: "Kente Print Blazer",
-      price: 129.99,
+      price: 16767,
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=center",
       rating: 4.8,
       description: "Contemporary blazer with traditional Kente patterns",
@@ -46,7 +46,7 @@ const MarketplacePage = () => {
     {
       id: 4,
       name: "Ankara Midi Dress",
-      price: 89.99,
+      price: 11607,
       image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=400&fit=crop&crop=center",
       rating: 4.9,
       description: "Elegant midi dress with vibrant Ankara prints",
@@ -55,7 +55,7 @@ const MarketplacePage = () => {
     {
       id: 5,
       name: "Dashiki Shirt",
-      price: 69.99,
+      price: 9031,
       image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&crop=center",
       rating: 4.7,
       description: "Classic dashiki with modern tailoring",
@@ -64,7 +64,7 @@ const MarketplacePage = () => {
     {
       id: 6,
       name: "Mudcloth Bag",
-      price: 49.99,
+      price: 6449,
       image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center",
       rating: 4.6,
       description: "Handcrafted bag with traditional mudcloth design",
@@ -73,7 +73,7 @@ const MarketplacePage = () => {
     {
       id: 7,
       name: "African Print Kimono",
-      price: 95.99,
+      price: 12383,
       image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop&crop=center",
       rating: 4.5,
       description: "Flowing kimono with bold African prints",
@@ -82,7 +82,7 @@ const MarketplacePage = () => {
     {
       id: 8,
       name: "Tribal Jewelry Set",
-      price: 75.99,
+      price: 9803,
       image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop&crop=center",
       rating: 4.7,
       description: "Authentic tribal-inspired necklace and earring set",
@@ -91,7 +91,7 @@ const MarketplacePage = () => {
     {
       id: 9,
       name: "Wax Print Palazzo Pants",
-      price: 78.99,
+      price: 10189,
       image: "https://images.unsplash.com/photo-1544957992-20514f595d6f?w=400&h=400&fit=crop&crop=center",
       rating: 4.6,
       description: "Wide-leg palazzo pants in authentic African wax print",
@@ -100,7 +100,7 @@ const MarketplacePage = () => {
     {
       id: 10,
       name: "Boubou Traditional Robe",
-      price: 165.99,
+      price: 21413,
       image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
       rating: 4.8,
       description: "Elegant traditional Boubou robe with intricate embroidery",
@@ -206,7 +206,7 @@ const MarketplacePage = () => {
                 </CardDescription>
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-deep-emerald">
-                    ${product.price}
+                    KSh {product.price.toLocaleString()}
                   </span>
                   <div className="flex items-center gap-2">
                     {cart[product.id] ? (

@@ -19,7 +19,7 @@ const AllStyles = () => {
     {
       id: 1,
       name: "Unisex Hoodie",
-      price: 69.99,
+      price: 9031,
       image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center",
       rating: 4.8,
       description: "Comfortable unisex hoodie in neutral colors"
@@ -27,7 +27,7 @@ const AllStyles = () => {
     {
       id: 2,
       name: "Gender-Neutral Pants",
-      price: 79.99,
+      price: 10319,
       image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop&crop=center",
       rating: 4.7,
       description: "Versatile pants suitable for all body types"
@@ -35,7 +35,7 @@ const AllStyles = () => {
     {
       id: 3,
       name: "Inclusive Jacket",
-      price: 119.99,
+      price: 15479,
       image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=400&fit=crop&crop=center",
       rating: 4.9,
       description: "Stylish jacket designed for everyone"
@@ -43,7 +43,7 @@ const AllStyles = () => {
     {
       id: 4,
       name: "Universal Sneakers",
-      price: 89.99,
+      price: 11607,
       image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop&crop=center",
       rating: 4.6,
       description: "Comfortable sneakers for all occasions"
@@ -131,7 +131,7 @@ const AllStyles = () => {
                 </CardDescription>
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-deep-emerald">
-                    ${product.price}
+                    KSh {product.price.toLocaleString()}
                   </span>
                   <Button 
                     onClick={() => addToCart(product.id)}

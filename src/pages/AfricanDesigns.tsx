@@ -27,7 +27,7 @@ const AfricanDesigns = () => {
       description: "Modern African-inspired yellow tracksuit with geometric print details",
       category: "Contemporary",
       colors: ["Yellow", "Navy", "White"],
-      price: 89.99
+      price: 11607
     },
     {
       id: 2,
@@ -37,7 +37,7 @@ const AfricanDesigns = () => {
       description: "Elegant flowing kimono-style coat with traditional Ankara print patterns",
       category: "Contemporary",
       colors: ["Orange", "Gold", "Black", "Red"],
-      price: 129.99
+      price: 16767
     },
     {
       id: 3,
@@ -47,7 +47,7 @@ const AfricanDesigns = () => {
       description: "Stunning off-shoulder ball gown with circular African print motifs",
       category: "Traditional",
       colors: ["Orange", "Black", "White", "Gold"],
-      price: 149.99
+      price: 19349
     },
     {
       id: 4,
@@ -57,7 +57,7 @@ const AfricanDesigns = () => {
       description: "Traditional mudcloth-inspired bucket hats with symbolic patterns",
       category: "Accessories",
       colors: ["Black", "White", "Orange"],
-      price: 24.99
+      price: 3223
     },
     {
       id: 5,
@@ -67,7 +67,7 @@ const AfricanDesigns = () => {
       description: "Practical crossbody bag featuring vibrant Kente-inspired patterns",
       category: "Accessories",
       colors: ["Yellow", "Green", "Red", "Black"],
-      price: 45.99
+      price: 5933
     },
     {
       id: 6,
@@ -77,7 +77,7 @@ const AfricanDesigns = () => {
       description: "Comfortable slides featuring mixed African print patterns",
       category: "Footwear",
       colors: ["Yellow", "Black", "White"],
-      price: 32.99
+      price: 4255
     },
     {
       id: 7,
@@ -87,7 +87,7 @@ const AfricanDesigns = () => {
       description: "Complete summer set with Kente-print hat, bag, and sandals",
       category: "Accessories",
       colors: ["Multi-colored", "Gold", "Blue", "Green"],
-      price: 79.99
+      price: 10319
     },
     {
       id: 8,
@@ -97,7 +97,7 @@ const AfricanDesigns = () => {
       description: "Traditional handwoven cloth with geometric patterns representing various meanings",
       category: "Traditional",
       colors: ["Gold", "Green", "Red"],
-      price: 65.99
+      price: 8513
     },
     {
       id: 9,
@@ -107,7 +107,7 @@ const AfricanDesigns = () => {
       description: "Visual symbols representing concepts and wisdom from Akan culture",
       category: "Symbolic",
       colors: ["Black", "White", "Gold"],
-      price: 35.99
+      price: 4643
     },
     {
       id: 10,
@@ -117,7 +117,7 @@ const AfricanDesigns = () => {
       description: "Colorful garment with ornate embroidery around the neckline",
       category: "Traditional",
       colors: ["Multi-colored"],
-      price: 55.99
+      price: 7223
     }
   ];
 
@@ -259,7 +259,7 @@ const AfricanDesigns = () => {
                   </div>
                   <div className="flex items-center justify-between pt-3">
                     <span className="text-2xl font-bold text-deep-emerald">
-                      ${design.price}
+                      KSh {design.price.toLocaleString()}
                     </span>
                     <Button 
                       onClick={() => addToCart(design.id)}

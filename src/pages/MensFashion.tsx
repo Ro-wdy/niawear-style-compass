@@ -19,7 +19,7 @@ const MensFashion = () => {
     {
       id: 1,
       name: "Classic Suit",
-      price: 299.99,
+      price: 38697,
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=center",
       rating: 4.9,
       description: "Elegant two-piece suit perfect for business and formal events"
@@ -27,7 +27,7 @@ const MensFashion = () => {
     {
       id: 2,
       name: "Casual Shirt",
-      price: 59.99,
+      price: 7739,
       image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&crop=center",
       rating: 4.7,
       description: "Comfortable cotton shirt ideal for everyday wear"
@@ -35,7 +35,7 @@ const MensFashion = () => {
     {
       id: 3,
       name: "Denim Jeans",
-      price: 79.99,
+      price: 10319,
       image: "https://images.unsplash.com/photo-1542272454315-7ad9f9b2b9fb?w=400&h=400&fit=crop&crop=center",
       rating: 4.8,
       description: "Premium denim jeans with modern fit and style"
@@ -43,7 +43,7 @@ const MensFashion = () => {
     {
       id: 4,
       name: "Leather Jacket",
-      price: 199.99,
+      price: 25799,
       image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=400&fit=crop&crop=center",
       rating: 4.9,
       description: "Genuine leather jacket with classic design"
@@ -131,7 +131,7 @@ const MensFashion = () => {
                 </CardDescription>
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-deep-emerald">
-                    ${product.price}
+                    KSh {product.price.toLocaleString()}
                   </span>
                   <Button 
                     onClick={() => addToCart(product.id)}

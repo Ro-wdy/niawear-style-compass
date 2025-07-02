@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { X, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -56,7 +55,7 @@ const CartDropdown: React.FC<CartDropdownProps> = ({ isOpen, onClose }) => {
                     <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
                     <div className="flex-1">
                       <h4 className="font-medium text-sm">{item.name}</h4>
-                      <p className="text-deep-emerald font-bold">${item.price}</p>
+                      <p className="text-deep-emerald font-bold">KSh {item.price.toLocaleString()}</p>
                     </div>
                     <div className="flex flex-col gap-1">
                       <Button

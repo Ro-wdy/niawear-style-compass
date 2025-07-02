@@ -21,7 +21,7 @@ const WomensFashion = () => {
     {
       id: 1,
       name: "Floral Maxi Dress",
-      price: 79.99,
+      price: 10319,
       image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=400&fit=crop&crop=center",
       rating: 4.8,
       description: "Elegant flowing maxi dress with beautiful floral patterns"
@@ -29,7 +29,7 @@ const WomensFashion = () => {
     {
       id: 2,
       name: "Chic Blazer Set",
-      price: 129.99,
+      price: 16767,
       image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop&crop=center",
       rating: 4.9,
       description: "Professional blazer and skirt set perfect for business"
@@ -37,7 +37,7 @@ const WomensFashion = () => {
     {
       id: 3,
       name: "Casual Summer Top",
-      price: 45.99,
+      price: 5933,
       image: "https://images.unsplash.com/photo-1544957992-20514f595d6f?w=400&h=400&fit=crop&crop=center",
       rating: 4.7,
       description: "Comfortable and stylish summer blouse"
@@ -45,7 +45,7 @@ const WomensFashion = () => {
     {
       id: 4,
       name: "Evening Gown",
-      price: 189.99,
+      price: 24511,
       image: "https://images.unsplash.com/photo-1566479179817-c7e1e5d7a5b9?w=400&h=400&fit=crop&crop=center",
       rating: 4.9,
       description: "Stunning evening gown for special occasions"
@@ -144,7 +144,7 @@ const WomensFashion = () => {
                 </CardDescription>
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-deep-emerald">
-                    ${product.price}
+                    KSh {product.price.toLocaleString()}
                   </span>
                   <Button 
                     onClick={() => handleAddToCart(product)}
