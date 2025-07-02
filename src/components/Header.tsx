@@ -1,11 +1,17 @@
 
 import React, { useState } from 'react';
-import { Menu, X, ShoppingBag, Camera, Sparkles } from 'lucide-react';
+import { Menu, X, ShoppingBag, Camera, Sparkles, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useShoppingContext } from '@/contexts/ShoppingContext';
+import CartDropdown from './CartDropdown';
+import WishlistDropdown from './WishlistDropdown';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const { getCartCount, wishlist } = useShoppingContext();
 
   return (
     <header className="bg-deep-emerald shadow-lg sticky top-0 z-50">
@@ -37,6 +43,49 @@ const Header = () => {
             <Link to="/marketplace" className="text-soft-cream hover:text-earthy-gold transition-colors duration-200">
               Marketplace
             </Link>
+            
+            {/* Wishlist Icon */}
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsWishlistOpen(!isWishlistOpen)}
+                className="text-soft-cream hover:text-earthy-gold relative"
+              >
+                <Heart className="h-5 w-5" />
+                {wishlist.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                    {wishlist.length}
+                  </span>
+                )}
+              </Button>
+              <WishlistDropdown 
+                isOpen={isWishlistOpen} 
+                onClose={() => setIsWishlistOpen(false)} 
+              />
+            </div>
+
+            {/* Cart Icon */}
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsCartOpen(!isCartOpen)}
+                className="text-soft-cream hover:text-earthy-gold relative"
+              >
+                <ShoppingBag className="h-5 w-5" />
+                {getCartCount() > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-earthy-gold text-charcoal-black rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                    {getCartCount()}
+                  </span>
+                )}
+              </Button>
+              <CartDropdown 
+                isOpen={isCartOpen} 
+                onClose={() => setIsCartOpen(false)} 
+              />
+            </div>
+
             <Link to="/ai-styling">
               <Button className="bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black font-semibold">
                 Get Started
@@ -45,7 +94,49 @@ const Header = () => {
           </nav>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            {/* Mobile Wishlist */}
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsWishlistOpen(!isWishlistOpen)}
+                className="text-soft-cream hover:text-earthy-gold relative"
+              >
+                <Heart className="h-5 w-5" />
+                {wishlist.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                    {wishlist.length}
+                  </span>
+                )}
+              </Button>
+              <WishlistDropdown 
+                isOpen={isWishlistOpen} 
+                onClose={() => setIsWishlistOpen(false)} 
+              />
+            </div>
+
+            {/* Mobile Cart */}
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsCartOpen(!isCartOpen)}
+                className="text-soft-cream hover:text-earthy-gold relative"
+              >
+                <ShoppingBag className="h-5 w-5" />
+                {getCartCount() > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-earthy-gold text-charcoal-black rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                    {getCartCount()}
+                  </span>
+                )}
+              </Button>
+              <CartDropdown 
+                isOpen={isCartOpen} 
+                onClose={() => setIsCartOpen(false)} 
+              />
+            </div>
+
             <Button
               variant="ghost"
               size="icon"

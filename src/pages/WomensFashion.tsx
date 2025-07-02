@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowLeft, Heart, ShoppingCart, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -5,10 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { useShoppingContext } from '@/contexts/ShoppingContext';
 import CheckoutModal from '@/components/CheckoutModal';
 
 const WomensFashion = () => {
-  const [cart, setCart] = useState<{[key: number]: number}>({});
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist, getCartCount } = useShoppingContext();
   const [checkoutModal, setCheckoutModal] = useState<{
     isOpen: boolean;
     productId: number | null;
@@ -50,15 +52,25 @@ const WomensFashion = () => {
     }
   ];
 
-  const addToCart = (productId: number) => {
-    const product = womensProducts.find(p => p.id === productId);
-    if (product) {
-      setCheckoutModal({ isOpen: true, productId });
-    }
+  const handleAddToCart = (product: any) => {
+    addToCart(product);
+    setCheckoutModal({ isOpen: true, productId: product.id });
   };
 
-  const getTotalItems = () => {
-    return Object.values(cart).reduce((sum, count) => sum + count, 0);
+  const handleWishlistToggle = (product: any) => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+      toast({
+        title: "Removed from Wishlist",
+        description: `${product.name} has been removed from your wishlist.`,
+      });
+    } else {
+      addToWishlist(product);
+      toast({
+        title: "Added to Wishlist",
+        description: `${product.name} has been added to your wishlist.`,
+      });
+    }
   };
 
   const closeCheckoutModal = () => {
@@ -81,7 +93,7 @@ const WomensFashion = () => {
             <h1 className="text-2xl font-playfair font-bold text-soft-cream">Women's Fashion</h1>
             <div className="flex items-center gap-2 text-soft-cream">
               <ShoppingCart className="h-5 w-5" />
-              <span>{getTotalItems()} items</span>
+              <span>{getCartCount()} items</span>
             </div>
           </div>
         </div>
@@ -111,8 +123,9 @@ const WomensFashion = () => {
                     variant="ghost" 
                     size="icon" 
                     className="absolute top-2 right-2 bg-white/80 hover:bg-white text-charcoal-black"
+                    onClick={() => handleWishlistToggle(product)}
                   >
-                    <Heart className="h-4 w-4" />
+                    <Heart className={`h-4 w-4 ${isInWishlist(product.id) ? 'text-red-500 fill-current' : ''}`} />
                   </Button>
                 </div>
               </CardHeader>
@@ -134,7 +147,7 @@ const WomensFashion = () => {
                     ${product.price}
                   </span>
                   <Button 
-                    onClick={() => addToCart(product.id)}
+                    onClick={() => handleAddToCart(product)}
                     className="bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream"
                   >
                     Add to Cart
