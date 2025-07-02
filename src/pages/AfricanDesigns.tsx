@@ -1,295 +1,201 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Heart, Search, Filter, ShoppingCart } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Star, Heart, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { useShoppingContext } from '@/contexts/ShoppingContext';
 import { useToast } from '@/hooks/use-toast';
 import CheckoutModal from '@/components/CheckoutModal';
 
 const AfricanDesigns = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [cart, setCart] = useState<{[key: number]: number}>({});
+  const { addToCart, addToWishlist, isInWishlist } = useShoppingContext();
+  const { toast } = useToast();
   const [checkoutModal, setCheckoutModal] = useState<{
     isOpen: boolean;
-    productId: number | null;
-  }>({ isOpen: false, productId: null });
-  const { toast } = useToast();
+    product: any;
+  }>({ isOpen: false, product: null });
 
-  const designs = [
+  const products = [
     {
       id: 1,
-      name: "Contemporary Yellow Tracksuit",
-      origin: "Modern Africa",
-      image: "/lovable-uploads/fef49afa-b6ba-4afc-9ba3-351cf36508b8.png",
-      description: "Modern African-inspired yellow tracksuit with geometric print details",
-      category: "Contemporary",
-      colors: ["Yellow", "Navy", "White"],
-      price: 11607
+      name: "Kente Dress",
+      price: 7740,
+      image: "/lovable-uploads/2cb8f323-cb3a-4dae-9804-9544ad9b87e0.png",
+      rating: 4.9,
+      description: "Authentic Kente pattern dress"
     },
     {
       id: 2,
-      name: "Ankara Kimono Coat",
-      origin: "West Africa",
-      image: "/lovable-uploads/76a451a9-71e2-4139-8bb5-beca9dfc5f74.png",
-      description: "Elegant flowing kimono-style coat with traditional Ankara print patterns",
-      category: "Contemporary",
-      colors: ["Orange", "Gold", "Black", "Red"],
-      price: 16767
+      name: "Kitenge Skirt",
+      price: 4320,
+      image: "/lovable-uploads/3a969995-a969-439c-b37a-935c991a5991.png",
+      rating: 4.6,
+      description: "Vibrant Kitenge fabric skirt"
     },
     {
       id: 3,
-      name: "African Print Gown",
-      origin: "Central Africa",
-      image: "/lovable-uploads/2cb8f323-cb3a-4dae-9804-9544ad9b87e0.png",
-      description: "Stunning off-shoulder ball gown with circular African print motifs",
-      category: "Traditional",
-      colors: ["Orange", "Black", "White", "Gold"],
-      price: 19349
+      name: "Ankara Top",
+      price: 3210,
+      image: "/lovable-uploads/4199999a-8571-4c4f-81a6-369895936993.png",
+      rating: 4.7,
+      description: "Stylish Ankara print top"
     },
     {
       id: 4,
-      name: "Mudcloth Bucket Hats",
-      origin: "Mali",
-      image: "/lovable-uploads/5c827bd6-5816-4a96-a547-9625a1926c0f.png",
-      description: "Traditional mudcloth-inspired bucket hats with symbolic patterns",
-      category: "Accessories",
-      colors: ["Black", "White", "Orange"],
-      price: 3223
+      name: "Maasai Beaded Necklace",
+      price: 2100,
+      image: "/lovable-uploads/54999a99-9a9a-4a9a-aa9a-9a9a9a9a9a9a.png",
+      rating: 4.5,
+      description: "Handmade Maasai beaded necklace"
     },
     {
       id: 5,
-      name: "Kente Print Backpack",
-      origin: "Ghana",
-      image: "/lovable-uploads/b3730133-85a4-46d1-abce-100bcd544c84.png",
-      description: "Practical crossbody bag featuring vibrant Kente-inspired patterns",
-      category: "Accessories",
-      colors: ["Yellow", "Green", "Red", "Black"],
-      price: 5933
+      name: "Zulu Beaded Bracelet",
+      price: 1680,
+      image: "/lovable-uploads/66666666-6666-4666-b666-666666666666.png",
+      rating: 4.4,
+      description: "Traditional Zulu beaded bracelet"
     },
     {
       id: 6,
-      name: "Ankara Print Slides",
-      origin: "Nigeria",
-      image: "/lovable-uploads/e6538ac0-42ec-48dd-ba3f-f153d27427b7.png",
-      description: "Comfortable slides featuring mixed African print patterns",
-      category: "Footwear",
-      colors: ["Yellow", "Black", "White"],
-      price: 4255
+      name: "Ethiopian Cross Pendant",
+      price: 2620,
+      image: "/lovable-uploads/77777777-7777-4777-b777-777777777777.png",
+      rating: 4.8,
+      description: "Elegant Ethiopian silver cross pendant"
     },
     {
       id: 7,
-      name: "Kente Accessories Set",
-      origin: "Ghana",
-      image: "/lovable-uploads/8ee99d7d-f688-41bd-b808-8853ff69bf17.png",
-      description: "Complete summer set with Kente-print hat, bag, and sandals",
-      category: "Accessories",
-      colors: ["Multi-colored", "Gold", "Blue", "Green"],
-      price: 10319
+      name: "Ghanaian Kente Stole",
+      price: 5390,
+      image: "/lovable-uploads/88888888-8888-4888-b888-888888888888.png",
+      rating: 4.9,
+      description: "Colorful Ghanaian Kente stole"
     },
     {
       id: 8,
-      name: "Kente Pattern",
-      origin: "Ghana",
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
-      description: "Traditional handwoven cloth with geometric patterns representing various meanings",
-      category: "Traditional",
-      colors: ["Gold", "Green", "Red"],
-      price: 8513
+      name: "Nigerian Gele Headwrap",
+      price: 1890,
+      image: "/lovable-uploads/99999999-9999-4999-b999-999999999999.png",
+      rating: 4.6,
+      description: "Stylish Nigerian Gele headwrap"
     },
-    {
-      id: 9,
-      name: "Adinkra Symbols",
-      origin: "Ghana",
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
-      description: "Visual symbols representing concepts and wisdom from Akan culture",
-      category: "Symbolic",
-      colors: ["Black", "White", "Gold"],
-      price: 4643
-    },
-    {
-      id: 10,
-      name: "Dashiki Pattern",
-      origin: "Nigeria",
-      image: "/lovable-uploads/75b0a51a-4727-424a-9bf4-c1ab7a5bd92d.png",
-      description: "Colorful garment with ornate embroidery around the neckline",
-      category: "Traditional",
-      colors: ["Multi-colored"],
-      price: 7223
-    }
   ];
 
-  const categories = ['All', 'Traditional', 'Contemporary', 'Symbolic', 'Accessories', 'Footwear'];
-
-  const filteredDesigns = designs.filter(design => {
-    const matchesSearch = design.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         design.origin.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || design.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const addToCart = (designId: number) => {
-    const design = designs.find(d => d.id === designId);
-    if (design) {
-      setCheckoutModal({ isOpen: true, productId: designId });
-    }
+  const handleAddToCart = (product: any) => {
+    addToCart(product);
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} has been added to your cart.`,
+    });
   };
 
-  const getTotalItems = () => {
-    return Object.values(cart).reduce((sum, count) => sum + count, 0);
+  const handleAddToWishlist = (product: any) => {
+    addToWishlist(product);
+    toast({
+      title: "Added to Wishlist",
+      description: `${product.name} has been added to your wishlist.`,
+    });
+  };
+
+  const handleCheckout = (product: any) => {
+    setCheckoutModal({ isOpen: true, product });
   };
 
   const closeCheckoutModal = () => {
-    setCheckoutModal({ isOpen: false, productId: null });
+    setCheckoutModal({ isOpen: false, product: null });
   };
-
-  const selectedProduct = checkoutModal.productId 
-    ? designs.find(d => d.id === checkoutModal.productId)
-    : null;
 
   return (
     <div className="min-h-screen bg-soft-cream">
-      {/* Header */}
-      <header className="bg-deep-emerald shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2 text-soft-cream hover:text-earthy-gold">
-              <ArrowLeft className="h-5 w-5" />
-              <span>Back to Home</span>
-            </Link>
-            <h1 className="text-2xl font-playfair font-bold text-soft-cream">African Design Heritage</h1>
-            <div className="flex items-center gap-4 text-soft-cream">
-              <div className="flex items-center gap-2">
-                <ShoppingCart className="h-5 w-5" />
-                <span>{getTotalItems()} items</span>
-              </div>
-              <Heart className="h-5 w-5" />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
+      <Header />
+      
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-playfair font-bold text-charcoal-black mb-4">
-            Explore African Design Heritage
-          </h2>
-          <p className="text-xl text-charcoal-black/70 max-w-3xl mx-auto">
-            Discover the rich history and cultural significance of traditional African patterns, 
-            prints, and designs from across the continent
+          <h1 className="text-4xl font-playfair font-bold text-charcoal-black mb-4">
+            African Designs
+          </h1>
+          <p className="text-xl text-charcoal-black/70">
+            Authentic African fashion celebrating heritage and style
           </p>
         </div>
 
-        {/* Search and Filter */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-charcoal-black/50" />
-            <Input
-              placeholder="Search designs or origins..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 border-deep-emerald/20 focus:border-deep-emerald"
-            />
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
-                className={selectedCategory === category ? 
-                  "bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream" : 
-                  "border-deep-emerald text-deep-emerald hover:bg-deep-emerald hover:text-soft-cream"
-                }
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        {/* Designs Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredDesigns.map((design) => (
-            <Card key={design.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-              <CardHeader className="p-0">
-                <div className="relative overflow-hidden rounded-t-lg">
-                  <img 
-                    src={design.image} 
-                    alt={design.name}
-                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="absolute top-2 right-2 bg-white/80 hover:bg-white text-charcoal-black"
-                  >
-                    <Heart className="h-4 w-4" />
-                  </Button>
-                  <Badge 
-                    className="absolute top-2 left-2 bg-deep-emerald text-soft-cream"
-                  >
-                    {design.category}
-                  </Badge>
-                </div>
-              </CardHeader>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {products.map((product) => (
+            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="aspect-square overflow-hidden rounded-t-lg">
+                <img 
+                  src={product.image} 
+                  alt={product.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
               <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <CardTitle className="text-lg font-playfair text-charcoal-black">
-                    {design.name}
-                  </CardTitle>
-                  <Badge variant="outline" className="text-xs border-warm-terracotta text-warm-terracotta">
-                    {design.origin}
-                  </Badge>
+                <h3 className="font-playfair font-semibold text-lg mb-2 text-charcoal-black">
+                  {product.name}
+                </h3>
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-4 w-4 ${
+                        i < Math.floor(product.rating) 
+                          ? 'fill-earthy-gold text-earthy-gold' 
+                          : 'text-gray-300'
+                      }`}
+                    />
+                  ))}
+                  <span className="text-sm text-charcoal-black/70 ml-1">
+                    ({product.rating})
+                  </span>
                 </div>
-                <CardDescription className="text-charcoal-black/70 mb-4 leading-relaxed">
-                  {design.description}
-                </CardDescription>
-                <div className="space-y-3">
-                  <div className="text-sm font-semibold text-charcoal-black">Traditional Colors:</div>
-                  <div className="flex flex-wrap gap-1">
-                    {design.colors.map((color, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
-                        {color}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between pt-3">
-                    <span className="text-2xl font-bold text-deep-emerald">
-                      KSh {design.price.toLocaleString()}
-                    </span>
-                    <Button 
-                      onClick={() => addToCart(design.id)}
-                      className="bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream"
-                    >
-                      <ShoppingCart className="h-4 w-4 mr-2" />
-                      Add to Cart
-                    </Button>
-                  </div>
+                <p className="text-2xl font-bold text-deep-emerald mb-4">
+                  KSh {product.price.toLocaleString()}
+                </p>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    onClick={() => handleAddToCart(product)}
+                    className="flex-1 bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream"
+                  >
+                    <ShoppingBag className="h-4 w-4 mr-2" />
+                    Add to Cart
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleAddToWishlist(product)}
+                    className={`${
+                      isInWishlist(product.id) 
+                        ? 'bg-red-50 border-red-200 text-red-600' 
+                        : 'border-charcoal-black/20 text-charcoal-black hover:bg-charcoal-black/5'
+                    }`}
+                  >
+                    <Heart className={`h-4 w-4 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                  </Button>
                 </div>
+                <Button
+                  size="sm"
+                  onClick={() => handleCheckout(product)}
+                  className="w-full mt-2 bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black"
+                >
+                  Buy Now
+                </Button>
               </CardContent>
             </Card>
           ))}
         </div>
-
-        {filteredDesigns.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-xl text-charcoal-black/70">
-              No designs found matching your search criteria.
-            </p>
-          </div>
-        )}
       </main>
+
+      <Footer />
 
       <CheckoutModal
         isOpen={checkoutModal.isOpen}
         onClose={closeCheckoutModal}
-        productName={selectedProduct?.name || ''}
-        productPrice={selectedProduct?.price || 0}
-        productImage={selectedProduct?.image || ''}
+        productName={checkoutModal.product?.name || ''}
+        productPrice={checkoutModal.product?.price || 0}
+        productImage={checkoutModal.product?.image || ''}
       />
     </div>
   );

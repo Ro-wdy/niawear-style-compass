@@ -1,256 +1,217 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ShoppingCart, Heart, Star, Plus, Minus } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Star, Heart, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { useShoppingContext } from '@/contexts/ShoppingContext';
 import { useToast } from '@/hooks/use-toast';
 import CheckoutModal from '@/components/CheckoutModal';
 
 const MarketplacePage = () => {
-  const [cart, setCart] = useState<{[key: number]: number}>({});
+  const { addToCart, addToWishlist, isInWishlist } = useShoppingContext();
+  const { toast } = useToast();
   const [checkoutModal, setCheckoutModal] = useState<{
     isOpen: boolean;
-    productId: number | null;
-  }>({ isOpen: false, productId: null });
-  const { toast } = useToast();
+    product: any;
+  }>({ isOpen: false, product: null });
 
   const products = [
     {
       id: 1,
-      name: "Ankara Print Jumpsuit",
-      price: 18833,
-      image: "/lovable-uploads/7bc4068b-f22d-4c1b-bb00-752a0d184568.png",
-      rating: 4.9,
-      description: "Stunning strapless jumpsuit with bold African print patterns",
-      category: "Jumpsuits"
+      name: "African Print Dress",
+      price: 6450,
+      image: "/lovable-uploads/2cb8f323-cb3a-4dae-9804-9544ad9b87e0.png",
+      rating: 4.8,
+      description: "Beautiful traditional African print dress"
     },
     {
       id: 2,
-      name: "Modern Agbada Set",
-      price: 24511,
-      image: "/lovable-uploads/81e383f1-e9d0-4ff8-b800-7fff7c41cc45.png",
-      rating: 4.8,
-      description: "Contemporary black Agbada with white accent stripes",
-      category: "Traditional"
+      name: "Kitenge Skirt",
+      price: 4200,
+      image: "/lovable-uploads/3a99a999-5550-44c9-a94f-58551c9a1909.png",
+      rating: 4.5,
+      description: "Vibrant Kitenge skirt with modern design"
     },
     {
       id: 3,
-      name: "Kente Print Blazer",
-      price: 16767,
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=center",
-      rating: 4.8,
-      description: "Contemporary blazer with traditional Kente patterns",
-      category: "Outerwear"
+      name: "Maasai Beaded Necklace",
+      price: 2800,
+      image: "/lovable-uploads/51894299-9191-481d-a635-56919001a444.png",
+      rating: 4.7,
+      description: "Handmade Maasai beaded necklace"
     },
     {
       id: 4,
-      name: "Ankara Midi Dress",
-      price: 11607,
-      image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&h=400&fit=crop&crop=center",
-      rating: 4.9,
-      description: "Elegant midi dress with vibrant Ankara prints",
-      category: "Dresses"
+      name: "Dashiki Top",
+      price: 5100,
+      image: "/lovable-uploads/6457f699-1c69-4b6d-b03b-59054489516d.png",
+      rating: 4.6,
+      description: "Stylish Dashiki top for any occasion"
     },
     {
       id: 5,
-      name: "Dashiki Shirt",
-      price: 9031,
-      image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=400&fit=crop&crop=center",
-      rating: 4.7,
-      description: "Classic dashiki with modern tailoring",
-      category: "Shirts"
+      name: "Kanzu Robe",
+      price: 7500,
+      image: "/lovable-uploads/711b9932-3b9f-4961-894a-147997379989.png",
+      rating: 4.9,
+      description: "Elegant Kanzu robe for men"
     },
     {
       id: 6,
-      name: "Mudcloth Bag",
-      price: 6449,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center",
-      rating: 4.6,
-      description: "Handcrafted bag with traditional mudcloth design",
-      category: "Accessories"
+      name: "Ankara Pants",
+      price: 4800,
+      image: "/lovable-uploads/81254097-5999-4a9a-8591-99594912495d.png",
+      rating: 4.4,
+      description: "Trendy Ankara print pants"
     },
     {
       id: 7,
-      name: "African Print Kimono",
-      price: 12383,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop&crop=center",
-      rating: 4.5,
-      description: "Flowing kimono with bold African prints",
-      category: "Outerwear"
+      name: "African Headwrap",
+      price: 1500,
+      image: "/lovable-uploads/92909111-4444-4561-8911-594ca5ec179e.png",
+      rating: 4.3,
+      description: "Colorful African headwrap"
     },
     {
       id: 8,
-      name: "Tribal Jewelry Set",
-      price: 9803,
-      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop&crop=center",
-      rating: 4.7,
-      description: "Authentic tribal-inspired necklace and earring set",
-      category: "Accessories"
+      name: "Shuka Blanket",
+      price: 3200,
+      image: "/lovable-uploads/a1979999-555f-4741-864b-22a992258a99.png",
+      rating: 4.8,
+      description: "Warm and cozy Shuka blanket"
     },
     {
       id: 9,
-      name: "Wax Print Palazzo Pants",
-      price: 10189,
-      image: "https://images.unsplash.com/photo-1544957992-20514f595d6f?w=400&h=400&fit=crop&crop=center",
-      rating: 4.6,
-      description: "Wide-leg palazzo pants in authentic African wax print",
-      category: "Bottoms"
+      name: " Maasai Sandals",
+      price: 2100,
+      image: "/lovable-uploads/b213c444-4444-4444-8888-444444444444.png",
+      rating: 4.2,
+      description: "Handcrafted Maasai sandals"
     },
     {
       id: 10,
-      name: "Boubou Traditional Robe",
-      price: 21413,
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center",
-      rating: 4.8,
-      description: "Elegant traditional Boubou robe with intricate embroidery",
-      category: "Traditional"
+      name: "Kikoi Wrap",
+      price: 2500,
+      image: "/lovable-uploads/c3456789-9876-5432-1010-212121212121.png",
+      rating: 4.6,
+      description: "Versatile Kikoi wrap for beach or casual wear"
     }
   ];
 
-  const addToCart = (productId: number) => {
-    const product = products.find(p => p.id === productId);
-    if (product) {
-      setCheckoutModal({ isOpen: true, productId });
-    }
-  };
-
-  const removeFromCart = (productId: number) => {
-    setCart(prev => {
-      const newCart = { ...prev };
-      if (newCart[productId] > 1) {
-        newCart[productId] -= 1;
-      } else {
-        delete newCart[productId];
-      }
-      return newCart;
+  const handleAddToCart = (product: any) => {
+    addToCart(product);
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} has been added to your cart.`,
     });
   };
 
-  const getTotalItems = () => {
-    return Object.values(cart).reduce((sum, count) => sum + count, 0);
+  const handleAddToWishlist = (product: any) => {
+    addToWishlist(product);
+    toast({
+      title: "Added to Wishlist",
+      description: `${product.name} has been added to your wishlist.`,
+    });
+  };
+
+  const handleCheckout = (product: any) => {
+    setCheckoutModal({ isOpen: true, product });
   };
 
   const closeCheckoutModal = () => {
-    setCheckoutModal({ isOpen: false, productId: null });
+    setCheckoutModal({ isOpen: false, product: null });
   };
-
-  const selectedProduct = checkoutModal.productId 
-    ? products.find(p => p.id === checkoutModal.productId)
-    : null;
 
   return (
     <div className="min-h-screen bg-soft-cream">
-      {/* Header */}
-      <header className="bg-deep-emerald shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2 text-soft-cream hover:text-earthy-gold">
-              <ArrowLeft className="h-5 w-5" />
-              <span>Back to Home</span>
-            </Link>
-            <h1 className="text-2xl font-playfair font-bold text-soft-cream">NiaWear Marketplace</h1>
-            <div className="flex items-center gap-2 text-soft-cream">
-              <ShoppingCart className="h-5 w-5" />
-              <span>{getTotalItems()} items</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
+      <Header />
+      
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-playfair font-bold text-charcoal-black mb-4">
-            Authentic African Fashion
-          </h2>
+          <h1 className="text-4xl font-playfair font-bold text-charcoal-black mb-4">
+            Marketplace
+          </h1>
           <p className="text-xl text-charcoal-black/70">
-            Discover our curated collection of contemporary African-inspired clothing
+            Discover unique fashion pieces from talented designers
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {products.map((product) => (
             <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-              <CardHeader className="p-0">
-                <div className="relative overflow-hidden rounded-t-lg">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    className="absolute top-2 right-2 bg-white/80 hover:bg-white text-charcoal-black"
+              <div className="aspect-square overflow-hidden rounded-t-lg">
+                <img 
+                  src={product.image} 
+                  alt={product.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <CardContent className="p-4">
+                <h3 className="font-playfair font-semibold text-lg mb-2 text-charcoal-black">
+                  {product.name}
+                </h3>
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-4 w-4 ${
+                        i < Math.floor(product.rating) 
+                          ? 'fill-earthy-gold text-earthy-gold' 
+                          : 'text-gray-300'
+                      }`}
+                    />
+                  ))}
+                  <span className="text-sm text-charcoal-black/70 ml-1">
+                    ({product.rating})
+                  </span>
+                </div>
+                <p className="text-2xl font-bold text-deep-emerald mb-4">
+                  KSh {product.price.toLocaleString()}
+                </p>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    onClick={() => handleAddToCart(product)}
+                    className="flex-1 bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream"
                   >
-                    <Heart className="h-4 w-4" />
+                    <ShoppingBag className="h-4 w-4 mr-2" />
+                    Add to Cart
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleAddToWishlist(product)}
+                    className={`${
+                      isInWishlist(product.id) 
+                        ? 'bg-red-50 border-red-200 text-red-600' 
+                        : 'border-charcoal-black/20 text-charcoal-black hover:bg-charcoal-black/5'
+                    }`}
+                  >
+                    <Heart className={`h-4 w-4 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
                   </Button>
                 </div>
-              </CardHeader>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge variant="secondary" className="text-xs">
-                    {product.category}
-                  </Badge>
-                  <div className="flex items-center gap-1 text-sm">
-                    <Star className="h-4 w-4 text-earthy-gold fill-current" />
-                    {product.rating}
-                  </div>
-                </div>
-                <CardTitle className="text-lg font-playfair text-charcoal-black mb-2">
-                  {product.name}
-                </CardTitle>
-                <CardDescription className="text-charcoal-black/60 mb-3">
-                  {product.description}
-                </CardDescription>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-deep-emerald">
-                    KSh {product.price.toLocaleString()}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {cart[product.id] ? (
-                      <div className="flex items-center gap-2">
-                        <Button 
-                          variant="outline" 
-                          size="icon"
-                          onClick={() => removeFromCart(product.id)}
-                          className="h-8 w-8"
-                        >
-                          <Minus className="h-4 w-4" />
-                        </Button>
-                        <span className="font-semibold">{cart[product.id]}</span>
-                        <Button 
-                          variant="outline" 
-                          size="icon"
-                          onClick={() => addToCart(product.id)}
-                          className="h-8 w-8"
-                        >
-                          <Plus className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ) : (
-                      <Button 
-                        onClick={() => addToCart(product.id)}
-                        className="bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream"
-                      >
-                        Add to Cart
-                      </Button>
-                    )}
-                  </div>
-                </div>
+                <Button
+                  size="sm"
+                  onClick={() => handleCheckout(product)}
+                  className="w-full mt-2 bg-earthy-gold hover:bg-earthy-gold/90 text-charcoal-black"
+                >
+                  Buy Now
+                </Button>
               </CardContent>
             </Card>
           ))}
         </div>
       </main>
 
+      <Footer />
+
       <CheckoutModal
         isOpen={checkoutModal.isOpen}
         onClose={closeCheckoutModal}
-        productName={selectedProduct?.name || ''}
-        productPrice={selectedProduct?.price || 0}
-        productImage={selectedProduct?.image || ''}
+        productName={checkoutModal.product?.name || ''}
+        productPrice={checkoutModal.product?.price || 0}
+        productImage={checkoutModal.product?.image || ''}
       />
     </div>
   );

@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { ArrowLeft, Camera, Upload, MessageSquare, Sparkles } from 'lucide-react';
+import { ArrowLeft, Camera, Upload, MessageSquare, Sparkles, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,38 +12,86 @@ import axios from 'axios';
 const AIStyling = () => {
   const [selectedOption, setSelectedOption] = useState<'photo' | 'describe' | null>(null);
   const [description, setDescription] = useState('');
+  const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [recommendations, setRecommendations] = useState(null);
   const { toast } = useToast();
 
   const API_URL = 'http://localhost:8000'; // Replace with your FastAPI URL
+  const MAX_PHOTOS = 3;
 
-  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setIsAnalyzing(true);
-      try {
-        const formData = new FormData();
-        formData.append('file', file);
+  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    
+    if (uploadedPhotos.length + files.length > MAX_PHOTOS) {
+      toast({
+        title: 'Too many photos',
+        description: `You can only upload up to ${MAX_PHOTOS} photos.`,
+        variant: 'destructive',
+      });
+      return;
+    }
 
-        const response = await axios.post(`${API_URL}/ai/upload-photo`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-
-        setRecommendations(response.data.data);
+    const validFiles = files.filter(file => {
+      const isValid = file.type.startsWith('image/') && file.size <= 10 * 1024 * 1024; // 10MB limit
+      if (!isValid) {
         toast({
-          title: 'Photo Analyzed!',
-          description: 'Your outfit recommendations are ready.',
-        });
-      } catch (error) {
-        toast({
-          title: 'Error',
-          description: 'Failed to analyze photo. Please try again.',
+          title: 'Invalid file',
+          description: 'Please upload image files under 10MB.',
           variant: 'destructive',
         });
-      } finally {
-        setIsAnalyzing(false);
       }
+      return isValid;
+    });
+
+    setUploadedPhotos(prev => [...prev, ...validFiles]);
+    
+    if (validFiles.length > 0) {
+      toast({
+        title: 'Photos uploaded',
+        description: `${validFiles.length} photo(s) added successfully.`,
+      });
+    }
+  };
+
+  const removePhoto = (index: number) => {
+    setUploadedPhotos(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleGetRecommendations = async () => {
+    if (uploadedPhotos.length === 0) {
+      toast({
+        title: 'No photos uploaded',
+        description: 'Please upload at least one photo to get recommendations.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const formData = new FormData();
+      uploadedPhotos.forEach((file, index) => {
+        formData.append(`file_${index}`, file);
+      });
+
+      const response = await axios.post(`${API_URL}/ai/upload-photos`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      setRecommendations(response.data.data);
+      toast({
+        title: 'Photos Analyzed!',
+        description: 'Your outfit recommendations are ready.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to analyze photos. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsAnalyzing(false);
     }
   };
 
@@ -60,8 +109,8 @@ const AIStyling = () => {
     try {
       const response = await axios.post(`${API_URL}/describe-style/`, {
         description,
-        occasion: null, // Add logic to extract occasion if needed
-        preferred_colors: [], // Add logic to extract colors if needed
+        occasion: null,
+        preferred_colors: [],
       });
 
       setRecommendations(response.data.data);
@@ -82,7 +131,7 @@ const AIStyling = () => {
 
   return (
     <div className="min-h-screen bg-soft-cream">
-      {/* Header (unchanged) */}
+      {/* Header */}
       <header className="bg-deep-emerald shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -125,7 +174,7 @@ const AIStyling = () => {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center text-charcoal-black/70 leading-relaxed">
-                  Upload a photo of your current outfit or wardrobe items and get instant AI-powered styling suggestions
+                  Upload up to 3 photos of your current outfit or wardrobe items and get instant AI-powered styling suggestions
                 </CardDescription>
               </CardContent>
             </Card>
@@ -154,11 +203,15 @@ const AIStyling = () => {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="text-2xl font-playfair text-charcoal-black">
-                  {selectedOption === 'photo' ? 'Upload Your Photo' : 'Describe Your Style'}
+                  {selectedOption === 'photo' ? 'Upload Your Photos' : 'Describe Your Style'}
                 </CardTitle>
                 <Button 
                   variant="outline"
-                  onClick={() => setSelectedOption(null)}
+                  onClick={() => {
+                    setSelectedOption(null);
+                    setUploadedPhotos([]);
+                    setRecommendations(null);
+                  }}
                 >
                   Back
                 </Button>
@@ -168,26 +221,71 @@ const AIStyling = () => {
               {selectedOption === 'photo' ? (
                 <div className="space-y-4">
                   <Label htmlFor="photo" className="text-charcoal-black">
-                    Choose a photo of your outfit or wardrobe items
+                    Upload up to {MAX_PHOTOS} photos of your outfit or wardrobe items
                   </Label>
+                  
+                  {/* Upload Area */}
                   <div className="border-2 border-dashed border-deep-emerald/30 rounded-lg p-8 text-center">
                     <Upload className="h-12 w-12 text-deep-emerald/50 mx-auto mb-4" />
                     <Input
                       id="photo"
                       type="file"
                       accept="image/*"
+                      multiple
                       onChange={handlePhotoUpload}
                       className="hidden"
+                      disabled={uploadedPhotos.length >= MAX_PHOTOS}
                     />
                     <Label htmlFor="photo" className="cursor-pointer">
-                      <Button asChild className="bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream">
-                        <span>Choose Photo</span>
+                      <Button 
+                        asChild 
+                        className="bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream"
+                        disabled={uploadedPhotos.length >= MAX_PHOTOS}
+                      >
+                        <span>Choose Photos ({uploadedPhotos.length}/{MAX_PHOTOS})</span>
                       </Button>
                     </Label>
                     <p className="text-sm text-charcoal-black/60 mt-2">
-                      Support JPG, PNG files up to 10MB
+                      Support JPG, PNG files up to 10MB each
                     </p>
                   </div>
+
+                  {/* Uploaded Photos Preview */}
+                  {uploadedPhotos.length > 0 && (
+                    <div className="space-y-2">
+                      <Label className="text-charcoal-black">Uploaded Photos:</Label>
+                      <div className="grid grid-cols-3 gap-4">
+                        {uploadedPhotos.map((file, index) => (
+                          <div key={index} className="relative">
+                            <img
+                              src={URL.createObjectURL(file)}
+                              alt={`Upload ${index + 1}`}
+                              className="w-full h-24 object-cover rounded-lg border"
+                            />
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="absolute -top-2 -right-2 h-6 w-6 bg-red-500 hover:bg-red-600 text-white rounded-full"
+                              onClick={() => removePhoto(index)}
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Recommend Styling Button */}
+                  {uploadedPhotos.length > 0 && (
+                    <Button 
+                      onClick={handleGetRecommendations}
+                      disabled={isAnalyzing}
+                      className="w-full bg-deep-emerald hover:bg-deep-emerald/90 text-soft-cream"
+                    >
+                      {isAnalyzing ? 'Analyzing Photos...' : 'Recommend Styling'}
+                    </Button>
+                  )}
                 </div>
               ) : (
                 <div className="space-y-4">
