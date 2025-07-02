@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowLeft, Heart, Search, Filter, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -7,11 +6,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import CheckoutModal from '@/components/CheckoutModal';
 
 const AfricanDesigns = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [cart, setCart] = useState<{[key: number]: number}>({});
+  const [checkoutModal, setCheckoutModal] = useState<{
+    isOpen: boolean;
+    productId: number | null;
+  }>({ isOpen: false, productId: null });
   const { toast } = useToast();
 
   const designs = [
@@ -127,19 +131,23 @@ const AfricanDesigns = () => {
   });
 
   const addToCart = (designId: number) => {
-    setCart(prev => ({
-      ...prev,
-      [designId]: (prev[designId] || 0) + 1
-    }));
-    toast({
-      title: "Added to Cart",
-      description: "Item has been added to your cart successfully!",
-    });
+    const design = designs.find(d => d.id === designId);
+    if (design) {
+      setCheckoutModal({ isOpen: true, productId: designId });
+    }
   };
 
   const getTotalItems = () => {
     return Object.values(cart).reduce((sum, count) => sum + count, 0);
   };
+
+  const closeCheckoutModal = () => {
+    setCheckoutModal({ isOpen: false, productId: null });
+  };
+
+  const selectedProduct = checkoutModal.productId 
+    ? designs.find(d => d.id === checkoutModal.productId)
+    : null;
 
   return (
     <div className="min-h-screen bg-soft-cream">
@@ -275,6 +283,14 @@ const AfricanDesigns = () => {
           </div>
         )}
       </main>
+
+      <CheckoutModal
+        isOpen={checkoutModal.isOpen}
+        onClose={closeCheckoutModal}
+        productName={selectedProduct?.name || ''}
+        productPrice={selectedProduct?.price || 0}
+        productImage={selectedProduct?.image || ''}
+      />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowLeft, ShoppingCart, Heart, Star, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -6,9 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import CheckoutModal from '@/components/CheckoutModal';
 
 const MarketplacePage = () => {
   const [cart, setCart] = useState<{[key: number]: number}>({});
+  const [checkoutModal, setCheckoutModal] = useState<{
+    isOpen: boolean;
+    productId: number | null;
+  }>({ isOpen: false, productId: null });
   const { toast } = useToast();
 
   const products = [
@@ -105,14 +109,10 @@ const MarketplacePage = () => {
   ];
 
   const addToCart = (productId: number) => {
-    setCart(prev => ({
-      ...prev,
-      [productId]: (prev[productId] || 0) + 1
-    }));
-    toast({
-      title: "Added to Cart",
-      description: "Item has been added to your cart successfully!",
-    });
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      setCheckoutModal({ isOpen: true, productId });
+    }
   };
 
   const removeFromCart = (productId: number) => {
@@ -130,6 +130,14 @@ const MarketplacePage = () => {
   const getTotalItems = () => {
     return Object.values(cart).reduce((sum, count) => sum + count, 0);
   };
+
+  const closeCheckoutModal = () => {
+    setCheckoutModal({ isOpen: false, productId: null });
+  };
+
+  const selectedProduct = checkoutModal.productId 
+    ? products.find(p => p.id === checkoutModal.productId)
+    : null;
 
   return (
     <div className="min-h-screen bg-soft-cream">
@@ -236,6 +244,14 @@ const MarketplacePage = () => {
           ))}
         </div>
       </main>
+
+      <CheckoutModal
+        isOpen={checkoutModal.isOpen}
+        onClose={closeCheckoutModal}
+        productName={selectedProduct?.name || ''}
+        productPrice={selectedProduct?.price || 0}
+        productImage={selectedProduct?.image || ''}
+      />
     </div>
   );
 };
